@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Task } from '../types';
 import { TaskStatus } from '../types';
-import { Check, Trash, Edit, GripVertical } from './icons';
+import { Check, Trash, Edit } from './icons';
 import { useToast } from '../hooks/useToast';
 import { useTranslation } from '../hooks/useTranslation';
 
@@ -36,7 +36,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onToggleSta
     <div 
       className={`bg-background border border-border rounded-lg p-4 flex items-center justify-between transition-all duration-300 hover:shadow-md hover:border-primary/50 ${isCompleted ? 'opacity-60' : ''}`}
     >
-        <div className="flex items-start gap-4 flex-1 cursor-pointer" onClick={() => onViewDetails(task)}>
+        <div className="flex items-start gap-4 flex-1 cursor-pointer min-w-0" onClick={() => onViewDetails(task)}>
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -51,8 +51,8 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onToggleSta
             >
               {isCompleted && <Check className="w-4 h-4" />}
             </button>
-            <div className="flex-1">
-                <h3 className={`font-semibold text-base ${isCompleted ? 'line-through text-muted-foreground' : 'text-foreground'}`}>{task.title}</h3>
+            <div className="flex-1 min-w-0">
+                <h3 className={`font-semibold text-base truncate ${isCompleted ? 'line-through text-muted-foreground' : 'text-foreground'}`}>{task.title}</h3>
                 {task.notes && (
                     <p className="text-sm text-muted-foreground mt-1 line-clamp-1">
                       {task.notes}
@@ -61,15 +61,12 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onToggleSta
             </div>
         </div>
         
-        <div className="flex items-center gap-1 ml-4">
+        <div className="flex items-center gap-1 ml-4 flex-shrink-0">
             <button onClick={handleEdit} className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-md transition-colors">
                 <Edit className="h-4 w-4" />
             </button>
             <button onClick={handleDelete} className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors">
                 <Trash className="h-4 w-4" />
-            </button>
-            <button className="p-2 text-muted-foreground cursor-grab">
-                <GripVertical className="h-4 w-4" />
             </button>
         </div>
     </div>
