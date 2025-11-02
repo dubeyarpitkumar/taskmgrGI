@@ -39,10 +39,7 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <svg className="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"></path>
-            </svg>
-            <span className="ml-2 font-bold text-xl">{t('header.title')}</span>
+            <span className="font-bold text-2xl text-foreground">My Tasks</span>
           </div>
           <div className="flex items-center space-x-4">
             <button

@@ -120,3 +120,30 @@ export const XCircle: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <line x1="9" y1="9" x2="15" y2="15"></line>
   </svg>
 );
+
+export const Search: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+);
+
+export const ArrowUpDown: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="m3 16 4 4 4-4"/>
+        <path d="M7 20V4"/>
+        <path d="m21 8-4-4-4 4"/>
+        <path d="M17 4v16"/>
+    </svg>
+);
+
+export const GripVertical: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <circle cx="9" cy="12" r="1"></circle>
+    <circle cx="9" cy="5" r="1"></circle>
+    <circle cx="9" cy="19" r="1"></circle>
+    <circle cx="15" cy="12" r="1"></circle>
+    <circle cx="15" cy="5" r="1"></circle>
+    <circle cx="15" cy="19" r="1"></circle>
+  </svg>
+);

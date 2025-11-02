@@ -18,8 +18,8 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, loading, onEdit, onDelete, o
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {[...Array(6)].map((_, i) => <SkeletonLoader key={i} />)}
+      <div className="space-y-4">
+        {[...Array(3)].map((_, i) => <SkeletonLoader key={i} />)}
       </div>
     );
   }
@@ -37,7 +37,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, loading, onEdit, onDelete, o
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="space-y-4">
       {tasks.map(task => (
         <TaskItem
           key={task.id}

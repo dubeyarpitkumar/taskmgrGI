@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import DashboardSummary from '../components/DashboardSummary';
 import TaskList from '../components/TaskList';
 import { useTasks } from '../hooks/useTasks';
-import { Plus, Bot } from '../components/icons';
+import { Plus, Bot, Search, ArrowUpDown } from '../components/icons';
 import TaskFormModal from '../components/TaskFormModal';
 import { useDebounce } from '../hooks/useDebounce';
 import { FilterStatus, SortOrder, Task } from '../types';
@@ -49,18 +49,15 @@ const HomePage: React.FC = () => {
   const filteredAndSortedTasks = useMemo(() => {
     return tasks
       .filter(task => {
-        // Filter by status
         if (filterStatus === FilterStatus.Completed) return task.status === 'completed';
         if (filterStatus === FilterStatus.Pending) return task.status === 'pending';
         return true;
       })
       .filter(task =>
-        // Filter by search term
         task.title.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
         task.notes?.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
       )
       .sort((a, b) => {
-        // Sort by date
         const dateA = new Date(a.createdAt).getTime();
         const dateB = new Date(b.createdAt).getTime();
         return sortOrder === SortOrder.Latest ? dateB - dateA : dateA - dateB;
@@ -74,63 +71,65 @@ const HomePage: React.FC = () => {
         <div className="space-y-8">
           <DashboardSummary tasks={tasks} />
          
-          <div className="bg-card p-6 rounded-2xl shadow-sm border border-border space-y-6">
-             {/* Filters and Search */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div className="w-full md:max-w-sm">
-                <input
-                    type="text"
-                    placeholder={t('search.placeholder')}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full bg-background border border-input rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                />
+          <div className="bg-card p-4 sm:p-6 rounded-xl shadow-sm border border-border space-y-6">
+             {/* Controls Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="relative w-full sm:w-auto sm:min-w-[250px] lg:max-w-xs">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                    <Search className="h-5 w-5" />
+                  </span>
+                  <input
+                      type="text"
+                      placeholder={t('search.placeholder')}
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full bg-background border border-input rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  />
               </div>
-              <div className="flex flex-col sm:flex-row items-center justify-start md:justify-end gap-2 sm:gap-4">
-                <div className="flex items-center gap-2 p-1 bg-secondary rounded-md">
+
+              <div className="flex flex-wrap items-center justify-start sm:justify-end gap-2">
+                 <div className="flex items-center gap-1 p-1 bg-secondary rounded-lg">
                    {(Object.values(FilterStatus)).map(status => (
                         <button
                           key={status}
                           onClick={() => setFilterStatus(status)}
-                          className={`px-3 py-1 text-sm rounded ${filterStatus === status ? 'bg-background shadow-sm' : 'text-muted-foreground hover:bg-background/50'}`}
+                          className={`px-3 py-1.5 text-sm rounded-md transition-colors ${filterStatus === status ? 'bg-background shadow-sm text-foreground font-semibold' : 'text-muted-foreground hover:text-foreground'}`}
                         >
                             {t(`filter.${status}`)}
                         </button>
                    ))}
                 </div>
-                 <div className="flex items-center gap-2 text-sm">
-                    <label htmlFor="sort-order" className="text-muted-foreground">{t('sort.by')}</label>
+                
+                 <div className="relative">
                     <select
                         id="sort-order"
                         value={sortOrder}
                         onChange={(e) => setSortOrder(e.target.value as SortOrder)}
-                        className="bg-secondary border border-transparent rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="appearance-none bg-background border border-input rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring pr-8"
                     >
-                        <option value={SortOrder.Latest}>{t('sort.latest')}</option>
-                        <option value={SortOrder.Oldest}>{t('sort.oldest')}</option>
+                        <option value={SortOrder.Latest}>Latest First</option>
+                        <option value={SortOrder.Oldest}>Oldest First</option>
                     </select>
+                     <ArrowUpDown className="h-4 w-4 absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                 </div>
-              </div>
-            </div>
-            
-            {/* Action Buttons */}
-            <div className="flex items-center gap-2">
-                <button
-                    onClick={() => setIsAIModalOpen(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
-                >
-                    <Bot className="h-4 w-4" />
-                    {t('ai.button')}
-                </button>
+                
                 <button
                     onClick={() => setIsTaskModalOpen(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/80 transition-colors text-sm"
+                    className="flex items-center gap-2 px-3 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors text-sm font-semibold"
                 >
                     <Plus className="h-4 w-4" />
                     {t('add.task')}
                 </button>
+                <button
+                    onClick={() => setIsAIModalOpen(true)}
+                    className="flex items-center gap-2 px-3 py-2 bg-background border border-border text-foreground rounded-lg hover:bg-secondary transition-colors text-sm font-semibold"
+                >
+                    <Bot className="h-4 w-4" />
+                    AI Task Generator
+                </button>
+              </div>
             </div>
-
+            
             <TaskList
               tasks={filteredAndSortedTasks}
               loading={loading}
