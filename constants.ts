@@ -61,11 +61,13 @@ export const translations = {
     // AI Feature
     "ai.button": "Generate Tasks from Goal",
     "ai.generator.button": "AI Task Generator",
-    "ai.modal.title": "Generate Tasks with AI",
-    "ai.modal.description": "Describe your goal, and we'll generate a few tasks to get you started.",
+    "ai.modal.title": "AI Task Generator",
+    "ai.modal.description": "Enter your goal and let AI suggest tasks to help you achieve it",
     "ai.modal.goal.placeholder": "e.g., 'Learn React in 30 days'",
     "ai.modal.generate": "Generate",
     "ai.generating": "Generating tasks...",
+    "ai.modal.save.task": "Save to My Tasks",
+    "ai.modal.task.saved": "Saved",
 
     // Toasts
     "toast.login.success": "Logged in successfully!",
@@ -141,11 +143,13 @@ export const translations = {
     // AI Feature
     "ai.button": "लक्ष्य से कार्य उत्पन्न करें",
     "ai.generator.button": "एआई टास्क जेनरेटर",
-    "ai.modal.title": "AI के साथ कार्य उत्पन्न करें",
-    "ai.modal.description": "अपने लक्ष्य का वर्णन करें, और हम आपको शुरू करने के लिए कुछ कार्य उत्पन्न करेंगे।",
+    "ai.modal.title": "एआई टास्क जेनरेटर",
+    "ai.modal.description": "अपना लक्ष्य दर्ज करें और AI को इसे प्राप्त करने में आपकी सहायता करने के लिए कार्यों का सुझाव दें",
     "ai.modal.goal.placeholder": "जैसे, '30 दिनों में रिएक्ट सीखें'",
     "ai.modal.generate": "उत्पन्न करें",
     "ai.generating": "कार्य उत्पन्न हो रहे हैं...",
+    "ai.modal.save.task": "मेरे कार्यों में सहेजें",
+    "ai.modal.task.saved": "सहेजा गया",
     
     // Toasts
     "toast.login.success": "सफलतापूर्वक लॉग इन किया!",

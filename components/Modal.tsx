@@ -12,18 +12,18 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
       <div
         className="relative bg-card rounded-lg shadow-xl w-full max-w-lg m-4 animate-fade-in"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-4 border-b border-border">
+        <div className={`flex items-center justify-between p-4 ${title ? 'border-b border-border' : ''}`}>
           <h2 className="text-lg font-semibold">{title}</h2>
-          <button onClick={onClose} className="p-1 rounded-full hover:bg-secondary">
-            <X className="h-5 w-5" />
+          <button onClick={onClose} className="p-1 rounded-full hover:bg-secondary absolute top-3 right-3">
+            <X className="h-5 w-5 text-muted-foreground" />
           </button>
         </div>
-        <div className="p-6">
+        <div className="p-6 pt-0">
           {children}
         </div>
       </div>

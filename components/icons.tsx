@@ -153,3 +153,9 @@ export const Filter: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
   </svg>
 );
+
+export const Sparkles: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+        <path d="m12 3-1.9 4.2-4.3.6 3.1 3-.7 4.2 3.8-2 3.8 2-.7-4.2 3.1-3-4.3-.6L12 3zM5 13l-2.1 4.5L.4 18l3.3 3.2-1 4.5 4.3-2.3 4.3 2.3-1-4.5 3.3-3.2-4.5-.7L10 13 5 13z"/>
+    </svg>
+);
