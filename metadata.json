@@ -1,0 +1,5 @@
+{
+  "name": "Supabase Todo App",
+  "description": "A modern, full-featured To-Do web application with authentication, task management, search, filtering, multilingual support, and an AI-powered task generation feature. Built with React, TypeScript, and Tailwind CSS.",
+  "requestFramePermissions": []
+}
