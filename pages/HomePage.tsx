@@ -94,6 +94,19 @@ const HomePage: React.FC = () => {
       value: order,
       label: t(`sort.${order}`),
   }));
+  
+  const FilterButton = ({ status, label }: { status: FilterStatus; label: string }) => (
+    <button
+      onClick={() => setFilterStatus(status)}
+      className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
+        filterStatus === status
+          ? 'bg-card text-foreground shadow-sm'
+          : 'text-muted-foreground hover:bg-muted/50'
+      }`}
+    >
+      {label}
+    </button>
+  );
 
   return (
     <div className="min-h-screen bg-secondary/50">
@@ -168,29 +181,15 @@ const HomePage: React.FC = () => {
 
             {/* Desktop Controls Bar */}
             <div className="hidden md:flex items-center gap-4">
-              <div className="relative flex-grow">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"><Search className="h-5 w-5" /></span>
-                <input type="text" placeholder={t('search.placeholder')} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full bg-background border border-input rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring" />
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="relative" ref={filterMenuRef}>
-                    <button onClick={() => setIsFilterMenuOpen(p => !p)} className="flex items-center gap-2 px-3 py-2 bg-background border border-input rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
-                        <Filter className="h-4 w-4 text-muted-foreground" />
-                        <span>{t(`filter.${filterStatus}`)}</span>
-                    </button>
-                    {isFilterMenuOpen && (
-                        <div className="origin-top-right absolute right-0 mt-2 w-48 bg-popover rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-10">
-                            <div className="py-1">
-                                {filterOptions.map(option => (
-                                    <button key={option.value} onClick={() => { setFilterStatus(option.value); setIsFilterMenuOpen(false); }} className="w-full text-left px-4 py-2 text-sm text-popover-foreground hover:bg-secondary flex items-center justify-between">
-                                        <span>{option.label}</span>
-                                        {filterStatus === option.value && <Check className="h-4 w-4 text-primary" />}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+                <div className="relative flex-grow max-w-xs">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"><Search className="h-5 w-5" /></span>
+                    <input type="text" placeholder={t('search.placeholder')} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full bg-background border border-input rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring" />
                 </div>
+                
+                <div className="flex items-center p-1 bg-secondary/70 rounded-lg">
+                    {filterOptions.map(opt => <FilterButton key={opt.value} status={opt.value} label={opt.label} />)}
+                </div>
+
                 <div className="relative" ref={sortMenuRef}>
                     <button onClick={() => setIsSortMenuOpen(p => !p)} className="flex items-center gap-2 px-3 py-2 bg-background border border-input rounded-lg text-sm text-foreground hover:bg-secondary transition-colors">
                         <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
@@ -209,15 +208,17 @@ const HomePage: React.FC = () => {
                         </div>
                     )}
                 </div>
-                <button onClick={() => setIsTaskModalOpen(true)} className="flex items-center justify-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors text-sm font-medium">
+                
+                <div className="flex-grow"></div>
+
+                <button onClick={() => setIsTaskModalOpen(true)} className="flex items-center justify-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors text-sm font-medium shadow-sm">
                   <Plus className="h-4 w-4" />
                   <span>{t('add.task')}</span>
                 </button>
-                <button onClick={() => setIsAIModalOpen(true)} className="flex items-center justify-center gap-2 px-4 py-2 bg-transparent border border-primary/50 text-primary rounded-lg hover:bg-primary/10 transition-colors text-sm font-medium">
+                <button onClick={() => setIsAIModalOpen(true)} className="flex items-center justify-center gap-2 px-4 py-2 bg-background border border-input text-foreground rounded-lg hover:bg-secondary transition-colors text-sm font-medium shadow-sm">
                   <Bot className="h-4 w-4" />
-                  <span>{t('ai.button')}</span>
+                  <span>{t('ai.generator.button')}</span>
                 </button>
-              </div>
             </div>
             
             <TaskList

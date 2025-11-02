@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Task } from '../types';
 import { TaskStatus } from '../types';
-import { Check, Trash, Edit } from './icons';
+import { Check, Trash, Edit, GripVertical } from './icons';
 import { useToast } from '../hooks/useToast';
 import { useTranslation } from '../hooks/useTranslation';
 
@@ -45,7 +45,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onToggleSta
               className={`w-6 h-6 flex-shrink-0 mt-0.5 flex items-center justify-center rounded-full border-2 transition-colors ${
                 isCompleted
                   ? 'bg-green-500 border-green-500 text-white'
-                  : 'border-muted-foreground/50 hover:border-primary'
+                  : 'border-orange-400 hover:bg-orange-50'
               }`}
               aria-label={isCompleted ? 'Mark as pending' : 'Mark as complete'}
             >
@@ -67,6 +67,9 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onToggleSta
             </button>
             <button onClick={handleDelete} className="p-2 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors">
                 <Trash className="h-4 w-4" />
+            </button>
+             <button className="p-2 text-muted-foreground/50 cursor-grab hover:text-foreground hover:bg-secondary rounded-md transition-colors" onClick={e => e.stopPropagation()}>
+                <GripVertical className="h-4 w-4" />
             </button>
         </div>
     </div>

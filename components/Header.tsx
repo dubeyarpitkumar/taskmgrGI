@@ -1,17 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../contexts/ThemeContext';
-import { Sun, Moon, LogOut, User as UserIcon } from './icons';
+import { Sun, Moon, LogOut, User as UserIcon, Check } from './icons';
 import { useToast } from '../hooks/useToast';
 import { useTranslation } from '../hooks/useTranslation';
 
 const Header: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, language, setLanguage } = useTranslation();
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const { addToast } = useToast();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const langMenuRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = async () => {
     await logout();
@@ -22,6 +24,9 @@ const Header: React.FC = () => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setMenuOpen(false);
+      }
+      if (langMenuRef.current && !langMenuRef.current.contains(event.target as Node)) {
+        setLangMenuOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -41,7 +46,30 @@ const Header: React.FC = () => {
           <div className="flex items-center">
             <span className="font-bold text-2xl text-foreground">My Tasks</span>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            <div className="relative" ref={langMenuRef}>
+              <button
+                onClick={() => setLangMenuOpen(p => !p)}
+                className="p-2 rounded-full text-foreground/60 hover:text-foreground hover:bg-secondary"
+                aria-label="Toggle language"
+              >
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+              </button>
+              {langMenuOpen && (
+                <div className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-popover ring-1 ring-black ring-opacity-5 focus:outline-none animate-fade-in">
+                  <div className="py-1">
+                    <button onClick={() => { setLanguage('en'); setLangMenuOpen(false); }} className="w-full text-left flex items-center justify-between px-4 py-2 text-sm text-popover-foreground hover:bg-secondary">
+                        <span>English</span>
+                        {language === 'en' && <Check className="h-4 w-4 text-primary" />}
+                    </button>
+                    <button onClick={() => { setLanguage('hi'); setLangMenuOpen(false); }} className="w-full text-left flex items-center justify-between px-4 py-2 text-sm text-popover-foreground hover:bg-secondary">
+                        <span>हिन्दी (Hindi)</span>
+                        {language === 'hi' && <Check className="h-4 w-4 text-primary" />}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full text-foreground/60 hover:text-foreground hover:bg-secondary"

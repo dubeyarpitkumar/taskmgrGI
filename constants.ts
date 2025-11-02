@@ -26,8 +26,10 @@ export const translations = {
     "header.title": "TodoApp",
     "logout": "Logout",
     "dashboard.title": "Dashboard",
+    "dashboard.total": "Total Tasks",
     "dashboard.completed": "Completed",
     "dashboard.pending": "Pending",
+    "dashboard.completionRate": "Completion Rate",
     "dashboard.progress": "Tasks Progress",
     "tasks.title": "Your Tasks",
     "add.task": "Add Task",
@@ -58,6 +60,7 @@ export const translations = {
     
     // AI Feature
     "ai.button": "Generate Tasks from Goal",
+    "ai.generator.button": "AI Task Generator",
     "ai.modal.title": "Generate Tasks with AI",
     "ai.modal.description": "Describe your goal, and we'll generate a few tasks to get you started.",
     "ai.modal.goal.placeholder": "e.g., 'Learn React in 30 days'",
@@ -103,8 +106,10 @@ export const translations = {
     "header.title": "टूडूऐप",
     "logout": "लॉग आउट",
     "dashboard.title": "डैशबोर्ड",
+    "dashboard.total": "कुल कार्य",
     "dashboard.completed": "पूर्ण",
     "dashboard.pending": "लंबित",
+    "dashboard.completionRate": "पूर्णता दर",
     "dashboard.progress": "कार्य प्रगति",
     "tasks.title": "आपके कार्य",
     "add.task": "कार्य जोड़ें",
@@ -135,6 +140,7 @@ export const translations = {
 
     // AI Feature
     "ai.button": "लक्ष्य से कार्य उत्पन्न करें",
+    "ai.generator.button": "एआई टास्क जेनरेटर",
     "ai.modal.title": "AI के साथ कार्य उत्पन्न करें",
     "ai.modal.description": "अपने लक्ष्य का वर्णन करें, और हम आपको शुरू करने के लिए कुछ कार्य उत्पन्न करेंगे।",
     "ai.modal.goal.placeholder": "जैसे, '30 दिनों में रिएक्ट सीखें'",
