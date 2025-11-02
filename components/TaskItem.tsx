@@ -10,9 +10,10 @@ interface TaskItemProps {
   onEdit: (task: Task) => void;
   onDelete: (taskId: string) => void;
   onToggleStatus: (taskId: string) => void;
+  onViewDetails: (task: Task) => void;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onToggleStatus }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onToggleStatus, onViewDetails }) => {
   const { t } = useTranslation();
   const { addToast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -40,7 +41,8 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onToggleSta
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleDelete = () => {
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (window.confirm(t('task.delete.confirm'))) {
       onDelete(task.id);
       addToast(t('toast.task.delete.success'), 'success');
@@ -48,20 +50,29 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onToggleSta
     setMenuOpen(false);
   };
 
+  const handleEdit = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onEdit(task);
+      setMenuOpen(false);
+  }
+
   return (
-    <div className={`relative flex flex-col bg-background/30 dark:bg-black/20 backdrop-blur-lg border border-white/20 rounded-xl shadow-lg transition-all duration-300 ${isCompleted ? 'opacity-60' : ''}`}>
+    <div 
+      className={`relative flex flex-col bg-background/30 dark:bg-black/20 backdrop-blur-lg border border-white/20 rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer ${isCompleted ? 'opacity-60' : ''}`}
+      onClick={() => onViewDetails(task)}
+    >
       <div className="p-5 flex-grow">
         <div className="flex items-start justify-between">
           <h3 className={`font-bold text-lg truncate pr-8 ${isCompleted ? 'line-through text-muted-foreground' : 'text-foreground'}`}>{task.title}</h3>
           
           <div className="relative" ref={menuRef}>
-            <button onClick={() => setMenuOpen(prev => !prev)} className="absolute -top-2 -right-2 p-1 text-muted-foreground hover:text-foreground rounded-full">
+            <button onClick={(e) => { e.stopPropagation(); setMenuOpen(prev => !prev);}} className="absolute -top-2 -right-2 p-1 text-muted-foreground hover:text-foreground rounded-full">
                 <MoreVertical className="h-5 w-5" />
             </button>
              {menuOpen && (
-                 <div className="origin-top-right absolute right-0 mt-8 w-40 rounded-md shadow-lg bg-popover ring-1 ring-black ring-opacity-5 z-10 animate-fade-in">
+                 <div className="origin-top-right absolute right-0 mt-8 w-40 rounded-md shadow-lg bg-popover ring-1 ring-black ring-opacity-5 z-10 animate-fade-in" onClick={e => e.stopPropagation()}>
                      <div className="py-1">
-                         <button onClick={() => { onEdit(task); setMenuOpen(false); }} className="w-full text-left flex items-center px-4 py-2 text-sm text-foreground hover:bg-secondary">
+                         <button onClick={handleEdit} className="w-full text-left flex items-center px-4 py-2 text-sm text-foreground hover:bg-secondary">
                              <Edit className="mr-2 h-4 w-4"/> {t('task.edit')}
                          </button>
                          <button onClick={handleDelete} className="w-full text-left flex items-center px-4 py-2 text-sm text-destructive hover:bg-destructive/10">
@@ -80,7 +91,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onToggleSta
             </p>
             {showReadMore && (
               <button
-                onClick={() => setIsExpanded(!isExpanded)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsExpanded(!isExpanded);
+                }}
                 className="text-primary text-xs font-semibold mt-1"
               >
                 {isExpanded ? t('task.read.less') : t('task.read.more')}
@@ -94,7 +108,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete, onToggleSta
           {new Date(task.createdAt).toLocaleDateString()}
         </p>
         <button
-          onClick={() => onToggleStatus(task.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleStatus(task.id);
+          }}
           className={`w-8 h-8 flex items-center justify-center rounded-full border-2 transition-colors ${
             isCompleted
               ? 'bg-primary border-primary text-primary-foreground'

@@ -6,16 +6,19 @@ import { useTasks } from '../hooks/useTasks';
 import { Plus, Bot } from '../components/icons';
 import TaskFormModal from '../components/TaskFormModal';
 import { useDebounce } from '../hooks/useDebounce';
-import { FilterStatus, SortOrder } from '../types';
+import { FilterStatus, SortOrder, Task } from '../types';
 import AIGoalModal from '../components/AIGoalModal';
 import { useTranslation } from '../hooks/useTranslation';
+import TaskDetailModal from '../components/TaskDetailModal';
 
 const HomePage: React.FC = () => {
   const { t } = useTranslation();
   const { tasks, loading, addTask, updateTask, deleteTask, toggleTaskStatus, addMultipleTasks } = useTasks();
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
-  const [editingTask, setEditingTask] = useState(null);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [viewingTask, setViewingTask] = useState<Task | null>(null);
+  const [isTaskDetailModalOpen, setIsTaskDetailModalOpen] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<FilterStatus>(FilterStatus.All);
@@ -23,14 +26,24 @@ const HomePage: React.FC = () => {
 
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-  const handleEdit = (task: any) => {
+  const handleEdit = (task: Task) => {
     setEditingTask(task);
     setIsTaskModalOpen(true);
+  };
+  
+  const handleViewDetails = (task: Task) => {
+    setViewingTask(task);
+    setIsTaskDetailModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsTaskModalOpen(false);
     setEditingTask(null);
+  };
+  
+  const handleCloseDetailModal = () => {
+    setIsTaskDetailModalOpen(false);
+    setViewingTask(null);
   };
 
   const filteredAndSortedTasks = useMemo(() => {
@@ -125,6 +138,7 @@ const HomePage: React.FC = () => {
               onEdit={handleEdit}
               onDelete={deleteTask}
               onToggleStatus={toggleTaskStatus}
+              onViewDetails={handleViewDetails}
             />
           </div>
         </div>
@@ -141,6 +155,12 @@ const HomePage: React.FC = () => {
         isOpen={isAIModalOpen}
         onClose={() => setIsAIModalOpen(false)}
         onTasksGenerated={addMultipleTasks}
+      />
+
+      <TaskDetailModal
+        isOpen={isTaskDetailModalOpen}
+        onClose={handleCloseDetailModal}
+        task={viewingTask}
       />
     </div>
   );

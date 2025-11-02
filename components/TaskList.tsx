@@ -10,9 +10,10 @@ interface TaskListProps {
   onEdit: (task: Task) => void;
   onDelete: (taskId: string) => void;
   onToggleStatus: (taskId: string) => void;
+  onViewDetails: (task: Task) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, loading, onEdit, onDelete, onToggleStatus }) => {
+const TaskList: React.FC<TaskListProps> = ({ tasks, loading, onEdit, onDelete, onToggleStatus, onViewDetails }) => {
   const { t } = useTranslation();
 
   if (loading) {
@@ -44,6 +45,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, loading, onEdit, onDelete, o
           onEdit={onEdit}
           onDelete={onDelete}
           onToggleStatus={onToggleStatus}
+          onViewDetails={onViewDetails}
         />
       ))}
     </div>

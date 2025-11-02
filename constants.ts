@@ -51,6 +51,10 @@ export const translations = {
     "task.form.save": "Save Task",
     "task.form.update": "Update Task",
     "task.delete.confirm": "Are you sure you want to delete this task?",
+    "task.detail.title": "Task Details",
+    "task.detail.status": "Status",
+    "task.detail.created": "Created",
+    "task.detail.notes": "Notes",
     
     // AI Feature
     "ai.button": "Generate Tasks from Goal",
@@ -124,6 +128,10 @@ export const translations = {
     "task.form.save": "कार्य सहेजें",
     "task.form.update": "कार्य अपडेट करें",
     "task.delete.confirm": "क्या आप वाकई इस कार्य को हटाना चाहते हैं?",
+    "task.detail.title": "कार्य विवरण",
+    "task.detail.status": "स्थिति",
+    "task.detail.created": "बनाया गया",
+    "task.detail.notes": "टिप्पणियाँ",
 
     // AI Feature
     "ai.button": "लक्ष्य से कार्य उत्पन्न करें",
