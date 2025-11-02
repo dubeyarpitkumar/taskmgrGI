@@ -71,41 +71,22 @@ const HomePage: React.FC = () => {
     <div className="min-h-screen bg-secondary/50">
       <Header />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="md:col-span-3">
-             <DashboardSummary tasks={tasks} />
-          </div>
-          <div className="md:col-span-3 bg-card p-6 rounded-2xl shadow-sm border border-border">
-            <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-              <h2 className="text-2xl font-bold text-foreground">{t('tasks.title')}</h2>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setIsAIModalOpen(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
-                >
-                  <Bot className="h-4 w-4" />
-                  {t('ai.button')}
-                </button>
-                <button
-                  onClick={() => setIsTaskModalOpen(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/80 transition-colors text-sm"
-                >
-                  <Plus className="h-4 w-4" />
-                  {t('add.task')}
-                </button>
+        <div className="space-y-8">
+          <DashboardSummary tasks={tasks} />
+         
+          <div className="bg-card p-6 rounded-2xl shadow-sm border border-border space-y-6">
+             {/* Filters and Search */}
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div className="w-full md:max-w-sm">
+                <input
+                    type="text"
+                    placeholder={t('search.placeholder')}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full bg-background border border-input rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                />
               </div>
-            </div>
-
-            {/* Filters and Search */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <input
-                type="text"
-                placeholder={t('search.placeholder')}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="col-span-1 md:col-span-1 bg-background border border-input rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-              />
-              <div className="col-span-1 md:col-span-2 flex flex-wrap items-center justify-start md:justify-end gap-2 sm:gap-4">
+              <div className="flex flex-col sm:flex-row items-center justify-start md:justify-end gap-2 sm:gap-4">
                 <div className="flex items-center gap-2 p-1 bg-secondary rounded-md">
                    {(Object.values(FilterStatus)).map(status => (
                         <button
@@ -130,6 +111,24 @@ const HomePage: React.FC = () => {
                     </select>
                 </div>
               </div>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="flex items-center gap-2">
+                <button
+                    onClick={() => setIsAIModalOpen(true)}
+                    className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
+                >
+                    <Bot className="h-4 w-4" />
+                    {t('ai.button')}
+                </button>
+                <button
+                    onClick={() => setIsTaskModalOpen(true)}
+                    className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/80 transition-colors text-sm"
+                >
+                    <Plus className="h-4 w-4" />
+                    {t('add.task')}
+                </button>
             </div>
 
             <TaskList
